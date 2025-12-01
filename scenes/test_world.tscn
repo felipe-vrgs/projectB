@@ -1,0 +1,585 @@
+[gd_scene load_steps=14 format=3 uid="uid://c8qj3k2m4n5p6"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_Floor"]
+size = Vector3(100, 1, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_Floor"]
+albedo_color = Color(0.5, 0.5, 0.5, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kyfjp"]
+size = Vector3(99.7301, 1.5211182, 100.52098)
+
+[sub_resource type="BoxMesh" id="BoxMesh_Ceiling"]
+size = Vector3(60, 1, 60)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_Ceiling"]
+albedo_color = Color(0.4, 0.4, 0.4, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_Ceiling"]
+size = Vector3(60, 1, 60)
+
+[sub_resource type="BoxMesh" id="BoxMesh_Wall_NorthSouth"]
+size = Vector3(100, 10, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_Wall"]
+albedo_color = Color(0.7, 0.7, 0.7, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_Wall_NorthSouth"]
+size = Vector3(100, 10, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_Wall_EastWest"]
+size = Vector3(1, 10, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_Wall_EastWest"]
+size = Vector3(1, 10, 100)
+
+[sub_resource type="BoxMesh" id="BoxMesh_Wall"]
+size = Vector3(4, 4, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_Wall"]
+size = Vector3(4, 4, 4)
+
+[node name="TestWorld" type="Node3D"]
+
+[node name="Floor" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("BoxMesh_Floor")
+surface_material_override/0 = SubResource("StandardMaterial3D_Floor")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape3D_kyfjp")
+
+[node name="Ceiling" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ceiling"]
+mesh = SubResource("BoxMesh_Ceiling")
+surface_material_override/0 = SubResource("StandardMaterial3D_Ceiling")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceiling"]
+shape = SubResource("BoxShape3D_Ceiling")
+
+[node name="Boundaries" type="Node3D" parent="."]
+
+[node name="WallNorth" type="StaticBody3D" parent="Boundaries"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -50)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boundaries/WallNorth"]
+mesh = SubResource("BoxMesh_Wall_NorthSouth")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boundaries/WallNorth"]
+shape = SubResource("BoxShape3D_Wall_NorthSouth")
+
+[node name="WallSouth" type="StaticBody3D" parent="Boundaries"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 50)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boundaries/WallSouth"]
+mesh = SubResource("BoxMesh_Wall_NorthSouth")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boundaries/WallSouth"]
+shape = SubResource("BoxShape3D_Wall_NorthSouth")
+
+[node name="WallEast" type="StaticBody3D" parent="Boundaries"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 5, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boundaries/WallEast"]
+mesh = SubResource("BoxMesh_Wall_EastWest")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boundaries/WallEast"]
+shape = SubResource("BoxShape3D_Wall_EastWest")
+
+[node name="WallWest" type="StaticBody3D" parent="Boundaries"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 5, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boundaries/WallWest"]
+mesh = SubResource("BoxMesh_Wall_EastWest")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boundaries/WallWest"]
+shape = SubResource("BoxShape3D_Wall_EastWest")
+
+[node name="Maze" type="Node3D" parent="."]
+
+[node name="Wall_0_0" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 2, -28)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_0_0"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_0_0"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_0_1" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 2, -20)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_0_1"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_0_1"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_0_2" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 2, -12)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_0_2"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_0_2"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_0_4" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 2, 4)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_0_4"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_0_4"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_0_5" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 2, 12)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_0_5"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_0_5"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_0_6" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 2, 20)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_0_6"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_0_6"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_0_7" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 2, 28)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_0_7"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_0_7"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_1_0" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 2, -28)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_1_0"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_1_0"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_1_2" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 2, -12)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_1_2"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_1_2"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_1_4" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 2, 4)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_1_4"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_1_4"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_1_6" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 2, 20)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_1_6"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_1_6"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_1_7" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 2, 28)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_1_7"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_1_7"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_2_0" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 2, -28)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_2_0"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_2_0"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_2_1" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 2, -20)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_2_1"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_2_1"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_2_3" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 2, -4)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_2_3"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_2_3"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_2_5" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 2, 12)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_2_5"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_2_5"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_2_6" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 2, 20)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_2_6"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_2_6"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_2_7" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 2, 28)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_2_7"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_2_7"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_3_0" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, -28)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_3_0"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_3_0"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_3_1" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, -20)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_3_1"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_3_1"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_3_3" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, -4)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_3_3"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_3_3"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_3_4" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, 4)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_3_4"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_3_4"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_3_6" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, 20)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_3_6"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_3_6"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_3_7" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, 28)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_3_7"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_3_7"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_4_0" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, -28)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_4_0"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_4_0"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_4_2" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, -12)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_4_2"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_4_2"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_4_3" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, -4)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_4_3"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_4_3"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_4_5" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, 12)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_4_5"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_4_5"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_4_6" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, 20)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_4_6"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_4_6"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_4_7" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, 28)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_4_7"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_4_7"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_5_0" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 2, -28)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_5_0"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_5_0"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_5_1" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 2, -20)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_5_1"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_5_1"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_5_3" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 2, -4)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_5_3"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_5_3"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_5_4" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 2, 4)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_5_4"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_5_4"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_5_6" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 2, 20)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_5_6"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_5_6"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_5_7" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 2, 28)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_5_7"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_5_7"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_6_0" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 2, -28)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_6_0"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_6_0"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_6_2" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 2, -12)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_6_2"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_6_2"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_6_4" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 2, 4)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_6_4"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_6_4"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_6_5" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 2, 12)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_6_5"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_6_5"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_6_7" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 2, 28)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_6_7"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_6_7"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_7_0" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 2, -28)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_7_0"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_7_0"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_7_1" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 2, -20)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_7_1"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_7_1"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_7_2" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 2, -12)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_7_2"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_7_2"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_7_4" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 2, 4)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_7_4"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_7_4"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_7_5" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 2, 12)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_7_5"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_7_5"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_7_6" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 2, 20)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_7_6"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_7_6"]
+shape = SubResource("BoxShape3D_Wall")
+
+[node name="Wall_7_7" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 2, 28)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Maze/Wall_7_7"]
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_Wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Wall_7_7"]
+shape = SubResource("BoxShape3D_Wall")

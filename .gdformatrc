@@ -1,0 +1,19 @@
+# GDScript Formatter Configuration
+# This file configures the gdtoolkit formatter (gdformat)
+# Install via: pip install gdtoolkit
+
+# Line length limit
+line-length = 100
+
+# Use tabs for indentation
+use-tabs = true
+
+# Number of spaces per tab (if use-tabs = false)
+tab-width = 1
+
+# Remove trailing whitespace
+remove-trailing-whitespace = true
+
+# Ensure file ends with newline
+end-of-file-newline = true
+

@@ -1,0 +1,34 @@
+# GDScript Linter Configuration
+# This file configures the gdtoolkit linter (gdlint)
+# Install via: pip install gdtoolkit
+
+# Maximum line length
+max-line-length = 100
+
+# Check for trailing whitespace
+check-trailing-whitespace = true
+
+# Check for mixed tabs and spaces
+check-mixed-tabs-and-spaces = true
+
+# Check for trailing blank lines
+check-trailing-blank-lines = true
+
+# Check for missing final newline
+check-missing-final-newline = true
+
+# Check for empty lines at end of file
+check-empty-lines-at-eof = true
+
+# Check for too many consecutive blank lines
+max-consecutive-blank-lines = 2
+
+# Check for whitespace before colon
+check-whitespace-before-colon = true
+
+# Check for whitespace around operators
+check-whitespace-around-operators = true
+
+# Check for whitespace after comma
+check-whitespace-after-comma = true
+

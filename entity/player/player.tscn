@@ -1,0 +1,66 @@
+[gd_scene load_steps=15 format=3 uid="uid://bhub6gbwretih"]
+
+[ext_resource type="Script" uid="uid://d4nm54so2koyr" path="res://entity/player/player.gd" id="1_nqnt1"]
+[ext_resource type="Script" uid="uid://dajrpq4efrg0o" path="res://entity/state_machine/state_machine.gd" id="2_state_machine"]
+[ext_resource type="Script" uid="uid://df3c3ryqq40l2" path="res://data/player_balance_config.gd" id="2_t2ln0"]
+[ext_resource type="Script" uid="uid://dihr4ray28or1" path="res://entity/player/states/idle_state.gd" id="3_idle"]
+[ext_resource type="Script" uid="uid://d3p1rdn2ge2bu" path="res://data/player_input_config.gd" id="3_qa8rf"]
+[ext_resource type="Script" uid="uid://5komnkbevp5i" path="res://entity/player/states/walk_state.gd" id="4_walk"]
+[ext_resource type="Script" uid="uid://ds7ps8krl227c" path="res://entity/player/states/run_state.gd" id="5_run"]
+[ext_resource type="Script" uid="uid://0tiy6adjod6s" path="res://entity/player/states/jump_state.gd" id="6_jump"]
+[ext_resource type="Script" uid="uid://bjyp16gwe7akp" path="res://entity/player/states/fall_state.gd" id="7_fall"]
+
+[sub_resource type="Resource" id="Resource_klmji"]
+script = ExtResource("2_t2ln0")
+metadata/_custom_type_script = "uid://df3c3ryqq40l2"
+
+[sub_resource type="Resource" id="Resource_wltfy"]
+script = ExtResource("3_qa8rf")
+metadata/_custom_type_script = "uid://d3p1rdn2ge2bu"
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1"]
+albedo_color = Color(0.2, 0.6, 1, 1)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1"]
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_nqnt1")
+balance_config = SubResource("Resource_klmji")
+input_config = SubResource("Resource_wltfy")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_1")
+surface_material_override/0 = SubResource("StandardMaterial3D_1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_1")
+
+[node name="Head" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6292361, 0)
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
+script = ExtResource("2_state_machine")
+starting_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("3_idle")
+
+[node name="Walk" type="Node" parent="StateMachine"]
+script = ExtResource("4_walk")
+
+[node name="Run" type="Node" parent="StateMachine"]
+script = ExtResource("5_run")
+
+[node name="Jump" type="Node" parent="StateMachine"]
+script = ExtResource("6_jump")
+
+[node name="Fall" type="Node" parent="StateMachine"]
+script = ExtResource("7_fall")
+
+[connection signal="state_binding_requested" from="StateMachine" to="." method="_on_state_binding_requested"]
