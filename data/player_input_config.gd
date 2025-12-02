@@ -8,6 +8,7 @@ extends Resource
 @export var action_move_back: StringName = "move_back"
 @export var action_jump: StringName = "jump"
 @export var action_run: StringName = "run"
+@export var action_toggle_lantern: StringName = "toggle_lantern"
 
 ## Movement keys
 @export var move_left_keys: Array[Key] = [KEY_A]
@@ -16,6 +17,7 @@ extends Resource
 @export var move_back_keys: Array[Key] = [KEY_S]
 @export var jump_keys: Array[Key] = [KEY_SPACE]
 @export var run_keys: Array[Key] = [KEY_SHIFT]
+@export var toggle_lantern_keys: Array[Key] = [KEY_F]
 
 func _get_keyboard_actions_map() -> Dictionary:
 	return {
@@ -25,6 +27,7 @@ func _get_keyboard_actions_map() -> Dictionary:
 		action_move_back: move_back_keys,
 		action_jump: jump_keys,
 		action_run: run_keys,
+		action_toggle_lantern: toggle_lantern_keys,
 	}
 
 func ensure_actions_registered() -> void:

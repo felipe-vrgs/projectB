@@ -31,3 +31,11 @@ extends Resource
 @export_group("Input")
 @export var walk_threshold: float = 0.3
 @export var run_threshold: float = 0.8
+
+## Head bobbing settings
+@export_group("Head Bobbing")
+@export var head_bob_enabled: bool = true
+@export var walk_bob_intensity: float = 0.05  # Vertical bobbing amount for walking
+@export var run_bob_intensity: float = 0.1  # Vertical bobbing amount for running
+@export var bob_frequency: float = 4.0  # Cycles per second (higher = faster bobbing)
+@export var bob_horizontal_intensity: float = 0.05  # Side-to-side bobbing (subtle)

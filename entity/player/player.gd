@@ -11,8 +11,14 @@ var mouse_captured: bool = false
 @onready var camera: Camera3D = $Head/Camera3D
 @onready var state_machine: StateMachine = $StateMachine
 @onready var mesh_instance: MeshInstance3D = $MeshInstance3D
+@onready var lantern: SpotLight3D = $Head/Lantern
 
 var movement: PlayerMovement
+var lantern_enabled: bool = true
+
+## Head bobbing
+var head_bob_timer: float = 0.0
+var original_head_position: Vector3
 
 func _ready() -> void:
 	# Create default resources if not set in editor
@@ -35,6 +41,14 @@ func _ready() -> void:
 	if state_machine:
 		state_machine.state_binding_requested.connect(_on_state_binding_requested)
 		state_machine.init()
+	
+	# Store original head position for bobbing
+	if head:
+		original_head_position = head.position
+	
+	# Initialize lantern (starts enabled)
+	if lantern:
+		lantern.visible = lantern_enabled
 
 func _input(event: InputEvent) -> void:
 	if state_machine:
@@ -48,6 +62,10 @@ func _input(event: InputEvent) -> void:
 
 	if event.is_action_pressed("ui_accept") and not mouse_captured:  # Click to capture
 		capture_mouse()
+	
+	# Toggle lantern
+	if event.is_action_pressed("toggle_lantern"):
+		toggle_lantern()
 
 func _physics_process(delta: float) -> void:
 	# Process state machine first (handles jump input and movement)
@@ -74,6 +92,9 @@ func _process(delta: float) -> void:
 
 	if state_machine:
 		state_machine.process_frame(delta)
+	
+	# Update head bobbing
+	_update_head_bobbing(delta)
 
 func _handle_mouse_look(event: InputEventMouseMotion) -> void:
 	if not balance_config or not head:
@@ -118,3 +139,52 @@ func is_action_just_pressed(action: StringName) -> bool:
 	if not input_config:
 		return false
 	return Input.is_action_just_pressed(action)
+
+func _update_head_bobbing(delta: float) -> void:
+	if not balance_config or not head or not balance_config.head_bob_enabled:
+		return
+	
+	# Only bob when moving on the ground
+	var horizontal_velocity := Vector3(velocity.x, 0, velocity.z)
+	var speed := horizontal_velocity.length()
+	var is_moving := speed > 0.1
+	var is_on_ground := is_on_floor()
+	
+	# Determine if we should bob (walking or running on ground)
+	var should_bob := false
+	var bob_intensity := 0.0
+	
+	if is_moving and is_on_ground and state_machine and state_machine.current_state:
+		var state_name := state_machine.current_state.name
+		
+		# Bob when walking or running
+		if state_name == &"Walk":
+			should_bob = true
+			bob_intensity = balance_config.walk_bob_intensity
+		elif state_name == &"Run":
+			should_bob = true
+			bob_intensity = balance_config.run_bob_intensity
+	
+	if should_bob:
+		# Update timer based on movement speed (faster = more frequent)
+		var speed_ratio := speed / balance_config.run_speed
+		head_bob_timer += delta * balance_config.bob_frequency * (1.0 + speed_ratio)
+		
+		# Calculate vertical bobbing (sine wave)
+		var vertical_offset := sin(head_bob_timer) * bob_intensity
+		
+		# Calculate horizontal bobbing (subtle side-to-side, phase-shifted)
+		var horizontal_offset := cos(head_bob_timer * 0.5) * balance_config.bob_horizontal_intensity * speed_ratio
+		
+		# Apply bobbing offset
+		head.position = original_head_position + Vector3(horizontal_offset, vertical_offset, 0.0)
+	else:
+		# Smoothly return to original position when not moving
+		head_bob_timer = 0.0
+		head.position = head.position.lerp(original_head_position, delta * 10.0)
+
+func toggle_lantern() -> void:
+	if not lantern:
+		return
+	lantern_enabled = not lantern_enabled
+	lantern.visible = lantern_enabled
