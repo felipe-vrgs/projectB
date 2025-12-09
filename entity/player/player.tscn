@@ -49,9 +49,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6292361, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, -0.2)
 light_color = Color(1, 0.85, 0.65, 1)
 light_energy = 1.2
+shadow_enabled = true
 spot_range = 12.0
 spot_angle = 35.0
-shadow_enabled = true
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
 script = ExtResource("2_state_machine")

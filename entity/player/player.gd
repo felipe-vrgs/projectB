@@ -3,6 +3,7 @@ extends CharacterBody3D
 
 @export var balance_config: PlayerBalanceConfig
 @export var input_config: PlayerInputConfig
+@export var interact_distance: float = 3.0
 
 ## First-person camera controls
 var mouse_captured: bool = false
@@ -66,6 +67,10 @@ func _input(event: InputEvent) -> void:
 	# Toggle lantern
 	if event.is_action_pressed("toggle_lantern"):
 		toggle_lantern()
+	
+	# Interact (doors)
+	if input_config and event.is_action_pressed(input_config.action_interact):
+		_try_interact()
 
 func _physics_process(delta: float) -> void:
 	# Process state machine first (handles jump input and movement)
@@ -188,3 +193,48 @@ func toggle_lantern() -> void:
 		return
 	lantern_enabled = not lantern_enabled
 	lantern.visible = lantern_enabled
+
+func _try_interact() -> void:
+	var door := _get_look_target_door()
+	if door:
+		var forward := Vector3.ZERO
+		if camera:
+			forward = -camera.global_transform.basis.z
+		if door.has_method("toggle_with_direction"):
+			door.toggle_with_direction(forward, false)
+		else:
+			door.toggle()
+
+func _get_look_target_door() -> Door:
+	if not camera:
+		return null
+	var origin: Vector3 = camera.global_transform.origin
+	var forward: Vector3 = -camera.global_transform.basis.z
+	var best: Door = null
+	var best_dist: float = interact_distance
+	for node in get_tree().get_nodes_in_group("door"):
+		if node is Door:
+			var door_pos: Vector3 = node.global_transform.origin
+			var to_door: Vector3 = door_pos - origin
+			var distance: float = to_door.length()
+			if distance > interact_distance:
+				continue
+			if distance == 0:
+				return node
+			var dir: Vector3 = to_door / distance
+			if dir.dot(forward) < 0.65:  # roughly within ~50 degrees cone
+				continue
+			if distance < best_dist:
+				best_dist = distance
+				best = node
+	return best
+
+func _extract_door_from_node(node: Object) -> Door:
+	var current := node as Node
+	while current:
+		if current is Door:
+			return current
+		if current.is_in_group("door"):
+			return current as Door
+		current = current.get_parent()
+	return null
