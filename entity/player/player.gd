@@ -16,7 +16,6 @@ var mouse_captured: bool = false
 
 var movement: PlayerMovement
 var lantern_enabled: bool = true
-
 ## Head bobbing
 var head_bob_timer: float = 0.0
 var original_head_position: Vector3
@@ -40,7 +39,8 @@ func _ready() -> void:
 	
 	capture_mouse()
 	if state_machine:
-		state_machine.state_binding_requested.connect(_on_state_binding_requested)
+		if not state_machine.is_connected("state_binding_requested", Callable(self, "_on_state_binding_requested")):
+			state_machine.state_binding_requested.connect(_on_state_binding_requested)
 		state_machine.init()
 	
 	# Store original head position for bobbing
@@ -195,39 +195,33 @@ func toggle_lantern() -> void:
 	lantern.visible = lantern_enabled
 
 func _try_interact() -> void:
-	var door := _get_look_target_door()
-	if door:
-		var forward := Vector3.ZERO
-		if camera:
-			forward = -camera.global_transform.basis.z
-		if door.has_method("toggle_with_direction"):
-			door.toggle_with_direction(forward, false)
-		else:
-			door.toggle()
+	# Prefer a raycast hit (more accurate when close or looking directly)
+	var door := _raycast_door()
+	# Fallback to cone search if nothing was hit but something is nearby
+	if not door:
+		return
+	var forward := Vector3.ZERO
+	if camera:
+		forward = -camera.global_transform.basis.z
+	if door.has_method("toggle_with_direction"):
+		door.toggle_with_direction(forward, false)
+	else:
+		door.toggle()
 
-func _get_look_target_door() -> Door:
+func _raycast_door() -> Door:
 	if not camera:
 		return null
 	var origin: Vector3 = camera.global_transform.origin
 	var forward: Vector3 = -camera.global_transform.basis.z
-	var best: Door = null
-	var best_dist: float = interact_distance
-	for node in get_tree().get_nodes_in_group("door"):
-		if node is Door:
-			var door_pos: Vector3 = node.global_transform.origin
-			var to_door: Vector3 = door_pos - origin
-			var distance: float = to_door.length()
-			if distance > interact_distance:
-				continue
-			if distance == 0:
-				return node
-			var dir: Vector3 = to_door / distance
-			if dir.dot(forward) < 0.65:  # roughly within ~50 degrees cone
-				continue
-			if distance < best_dist:
-				best_dist = distance
-				best = node
-	return best
+	# Nudge the start point forward so we don't start inside the door collider
+	var start := origin + forward * 0.2
+	var space_state := get_world_3d().direct_space_state
+	var query := PhysicsRayQueryParameters3D.create(start, origin + forward * interact_distance)
+	var result := space_state.intersect_ray(query)
+	if result and result.has("collider"):
+		var collider = result["collider"]
+		return _extract_door_from_node(collider)
+	return null
 
 func _extract_door_from_node(node: Object) -> Door:
 	var current := node as Node

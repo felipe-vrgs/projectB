@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://dqf53khb2o2d"]
+
+[ext_resource type="PackedScene" uid="uid://l03psh38dscf" path="res://scenes/tiles/base/corner.tscn" id="1_73edt"]
+[ext_resource type="PackedScene" uid="uid://rws13icuyi5p" path="res://scenes/tiles/base/wall.tscn" id="2_urpyn"]
+
+[node name="Split" type="Node3D"]
+
+[node name="Corner" parent="." instance=ExtResource("1_73edt")]
+
+[node name="Wall" parent="." instance=ExtResource("2_urpyn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)

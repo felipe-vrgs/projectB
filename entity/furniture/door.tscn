@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://dmfih00k5aevm"]
+
+[ext_resource type="PackedScene" uid="uid://d11krbjqdtbtr" path="res://addons/Structure/door.dae" id="1_o508s"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o508s"]
+size = Vector3(0.9985962, 1.9903564, 0.08929443)
+
+[node name="Door" instance=ExtResource("1_o508s")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.51805663, 1.0211806, -0.0055236816)
+shape = SubResource("BoxShape3D_o508s")

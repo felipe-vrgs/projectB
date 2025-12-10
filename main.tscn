@@ -1,16 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://dil3eka2ui3rb"]
+[gd_scene load_steps=7 format=3 uid="uid://dil3eka2ui3rb"]
 
 [ext_resource type="PackedScene" uid="uid://bhub6gbwretih" path="res://entity/player/player.tscn" id="1_player"]
 [ext_resource type="Script" uid="uid://df3c3ryqq40l2" path="res://data/player_balance_config.gd" id="2_h2yge"]
 [ext_resource type="PackedScene" uid="uid://cnkkknr1g3uka" path="res://scenes/bunker.tscn" id="2_lquwl"]
 [ext_resource type="Script" uid="uid://d3p1rdn2ge2bu" path="res://data/player_input_config.gd" id="3_1bvp3"]
-
-[sub_resource type="Environment" id="Environment_1"]
-background_mode = 1
-background_color = Color(0.5, 0.7, 1, 1)
-ambient_light_source = 1
-ambient_light_color = Color(1, 0.95, 0.9, 1)
-ambient_light_energy = 1.2
 
 [sub_resource type="Resource" id="Resource_lquwl"]
 script = ExtResource("2_h2yge")
@@ -22,12 +15,9 @@ metadata/_custom_type_script = "uid://d3p1rdn2ge2bu"
 
 [node name="Main" type="Node3D"]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_1")
-
 [node name="Bunker" parent="." instance=ExtResource("2_lquwl")]
 
 [node name="Player" parent="." instance=ExtResource("1_player")]
-transform = Transform3D(1, 0, 0, 0, 0.9999717, 0.007522315, 0, -0.007522315, 0.9999717, 5.458086, 2.7413263, 3.4895763)
+transform = Transform3D(1, 0, 0, 0, 0.9999717, 0.007522315, 0, -0.007522315, 0.9999717, 1.6269054, 1.1046128, 5.3668203)
 balance_config = SubResource("Resource_lquwl")
 input_config = SubResource("Resource_7mycd")

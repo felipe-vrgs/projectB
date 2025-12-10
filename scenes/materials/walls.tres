@@ -1,5 +1,41 @@
-[gd_resource type="StandardMaterial3D" format=3 uid="uid://7f75ovlyvfts"]
+[gd_resource type="ArrayMesh" load_steps=4 format=4 uid="uid://7f75ovlyvfts"]
+
+[ext_resource type="Texture2D" uid="uid://c3rjwgfbb0ug5" path="res://addons/Structure/wall0_texture.png" id="1_djn2p"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_djn2p"]
+resource_name = "wall0_material"
+cull_mode = 2
+albedo_texture = ExtResource("1_djn2p")
+roughness = 0.07647059
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_ynuyh"]
+_surfaces = [{
+"aabb": AABB(0, 0, -0.04999995, 2, 2.4, 0.04999995),
+"format": 34896613377,
+"index_count": 18,
+"index_data": PackedByteArray("AAABAAIAAgABAAMAAgADAAQAAAACAAUAAAAFAAYAAAAGAAcA"),
+"name": "wall0_material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("AAAAAP//AAAAAP////8AAP///////wAAAAD//wAAAAD/////AAAAAP//AAD//wAA//8AAAAAAAAAAAAAAAAAAA==")
+}]
+blend_shape_mode = 0
 
 [resource]
-albedo_color = Color(1, 0.92, 0.75, 1)
-roughness = 0.85
+resource_name = "Room"
+_surfaces = [{
+"aabb": AABB(0, 0, -0.04999995, 2, 2.4, 0.04999995),
+"attribute_data": PackedByteArray("AAD//wAAAAD//wAA/////wAAAABU1QAAVNUAAAAAAABU1f//AAD//wAA//9U1f//"),
+"format": 34896613399,
+"index_count": 18,
+"index_data": PackedByteArray("AAABAAIAAAACAAMABAAFAAYABAAGAAcACAAJAAoACAAKAAsA"),
+"material": SubResource("StandardMaterial3D_djn2p"),
+"name": "wall0_material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 12,
+"vertex_data": PackedByteArray("AAAAAP//AIAAAP////8AgP///////wCA//8AAP//AIAAAAAA////v///AAD///+///8AAAAA/78AAAAAAAD/v/////////+/AAD//////78AAP//AAD/v/////8AAP+//3////9/////f////3///wAA/38AAP9/AAD/fwAA/3////9/////f////3////9/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_ynuyh")

@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://rws13icuyi5p"]
+
+[ext_resource type="PackedScene" uid="uid://daua5p02ug84a" path="res://addons/Structure/wall0.dae" id="1_1vt3p"]
+[ext_resource type="ArrayMesh" uid="uid://7f75ovlyvfts" path="res://scenes/materials/walls.tres" id="2_p3kyp"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_p3kyp"]
+size = Vector3(2.009781, 2.4018555, 0.11047363)
+
+[node name="Wall" instance=ExtResource("1_1vt3p")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0060195923, 1.2131348, -6.1035156e-05)
+shape = SubResource("BoxShape3D_p3kyp")
+
+[node name="wall_0" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0.025)
+
+[node name="wall_1" type="MeshInstance3D" parent="." index="2"]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 1, 0, -0.025)
+mesh = ExtResource("2_p3kyp")
+skeleton = NodePath("")
